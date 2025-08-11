@@ -1,18 +1,15 @@
 {
   "name": "url-shortner",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd backend && npm run dev",
-    "client": "cd frontend && npm run dev"
+    "server": "cd backend && nodemon server.js",
+    "client": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^8.0.1",
+    "nodemon": "^3.1.0"
   }
 }
