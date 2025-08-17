@@ -31,14 +31,16 @@ const startServer = async () => {
 
     // API routes (namespaced under /api)
     app.post("/api", createShortUrl);
-    app.get("/api/:shortId", RedirectShortUrl);
+    app.get("/:shortId", RedirectShortUrl);
 
     // Serve frontend in production
     if (process.env.NODE_ENV === "production") {
-      app.use(express.static(path.join(__dirname, "../frontend/dist")));
-      app.get("/*", (_, res) =>
-        res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
-      );
+      const distPath = path.join(__dirname, "../frontend/dist");
+      app.use(express.static(distPath));
+      
+      app.get("*", (req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
+  });
     }
 
     app.listen(PORT, () => {
