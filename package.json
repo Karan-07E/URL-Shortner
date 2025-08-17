@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-  "server": "cd backend && nodemon server.js",
-  "client": "cd frontend && npm run dev",
-  "dev": "concurrently \"npm run server\" \"npm run client\"",
-  "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-  "build": "cd frontend && npm install && npm run build",
-  "start": "cd backend && node server.js"
-},
+  "start": "node backend/server.js",
+  "build": "cd frontend && npm install && npm run build"
+}
+,
   "devDependencies": {
     "concurrently": "^8.0.1",
     "nodemon": "^3.1.0",
