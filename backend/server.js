@@ -20,14 +20,25 @@ app.use(express.json());
 // Enable CORS
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174", 
+      "https://url4uu.onrender.com"
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
   })
 );
 
 const startServer = async () => {
   try {
     await connectDB();
+
+    // Health check endpoint
+    app.get("/health", (req, res) => {
+      res.json({ status: "OK", message: "Server is running" });
+    });
 
     // API routes (namespaced under /api)
     app.post("/api", createShortUrl);
