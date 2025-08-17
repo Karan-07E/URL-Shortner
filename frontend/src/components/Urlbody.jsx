@@ -17,7 +17,7 @@ const Urlbody = () => {
         setShort("");
         
         try {
-            const res = await api.post("/", {originalUrl : Original });
+            const res = await api.post("/api", {originalUrl : Original });
             if(res.status === 200){
                 const base = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
                 const shorturl = `${base}/${res.data.shortId}`;
