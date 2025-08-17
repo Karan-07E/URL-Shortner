@@ -19,7 +19,7 @@ const Urlbody = () => {
         try {
             const res = await api.post("/api", {originalUrl : Original });
             if(res.status === 200){
-                const shorturl = `${import.meta.env.VITE_API_URL}/${res.data.shortId}`;
+                const shorturl = `${window.location.origin}/${res.data.shortId}`;
                 setShort(shorturl);
             }
         } catch (error) {
