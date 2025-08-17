@@ -29,7 +29,7 @@ const Urlbody = () => {
         } finally {
             setloading(false);
         }
-    };
+    }; 
 
     // to display state if user click copy
     const handleCopy = async () => {
