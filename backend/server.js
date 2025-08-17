@@ -3,28 +3,42 @@ import cors from 'cors';
 import { createShortUrl, RedirectShortUrl } from './controllers/UrlControls.js';
 import dotenv from 'dotenv';
 import connectDB from './config/config.js';
-dotenv.config({quiet : true});
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+dotenv.config({ quiet: true });
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-connectDB();
+// ES Module __dirname fix
+const __dirname = path.resolve();
+
 app.use(express.json());
 
 // Enable CORS for frontend communication
-const corsOptions = {
-    origin: '*'
-};
+app.use(cors({ 
+    origin: true, // Allow all origins in development and production
+    credentials: true 
+}));
 
-app.use(cors(corsOptions));
-
-// API routes for creating URLs
+// API route for creating short URLs
 app.post('/api', createShortUrl);
 
-// Direct short URL redirect (without /api prefix)
+// Route for redirecting short URLs
 app.get('/:shortId', RedirectShortUrl);
 
+// Serve frontend for all other routes (React Router support)
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`)
+    app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html"));
+});
+};
+
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log('server running on port', PORT);
+    });
 });
