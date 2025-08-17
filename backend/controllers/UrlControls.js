@@ -1,10 +1,10 @@
 import Url from "../models/db.js";
 import { nanoid } from "nanoid";
-
+import { isUrl } from 'check-valid-url';
 
 export const createShortUrl = async (req, res) => {
     const { originalUrl } = req.body;
-    if(!originalUrl) {
+    if(!originalUrl || !isUrl(originalUrl)) {
         return res.status(400).json({ message : "Please provide a valid URL" });
     }
 
