@@ -31,7 +31,7 @@ const startServer = async () => {
 
     // API routes
     app.post("/api", createShortUrl);
-    app.get("/:shortId", RedirectShortUrl);
+    app.get("/api/:shortId", RedirectShortUrl);
 
     // Serve frontend in production
     if (process.env.NODE_ENV === "production") {
