@@ -29,14 +29,14 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    // API routes
+    // API routes (namespaced under /api)
     app.post("/api", createShortUrl);
     app.get("/api/:shortId", RedirectShortUrl);
 
     // Serve frontend in production
     if (process.env.NODE_ENV === "production") {
       app.use(express.static(path.join(__dirname, "../frontend/dist")));
-      app.get("*", (_, res) =>
+      app.get("/*", (_, res) =>
         res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
       );
     }
