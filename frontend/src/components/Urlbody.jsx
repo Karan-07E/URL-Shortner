@@ -19,7 +19,7 @@ const Urlbody = () => {
         try {
             const res = await api.post("/", {originalUrl : Original });
             if(res.status === 200){
-                const base = process.env.NODE_ENV === "production" ? "https://url4uu.vercel.app" : "http://localhost:5001";
+                const base = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
                 const shorturl = `${base}/${res.data.shortId}`;
                 setShort(shorturl);
             }
